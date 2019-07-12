@@ -42,6 +42,7 @@ public class FileParser {
 
     @SneakyThrows
     private void getComputers() {
+        computers.clear();
         Collection<File> reports = scanDir();
         for (File files : reports) {
             ComputerEntity pc = new ComputerEntity();

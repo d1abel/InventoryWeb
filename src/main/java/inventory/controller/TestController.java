@@ -1,7 +1,6 @@
 package inventory.controller;
 
 import inventory.component.DatabaseParser;
-import inventory.repository.ComputerRepository;
 import inventory.service.ComputerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

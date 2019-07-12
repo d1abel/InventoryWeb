@@ -43,5 +43,4 @@ public class ComputerEntity {
     @JoinColumn(name = "userLogin")
     private PcUserEntity loggedUser;
 
-
 }
