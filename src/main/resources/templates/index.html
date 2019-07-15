@@ -5,6 +5,10 @@
 
 <body>
 <form action="/update" method="post"><button type="submit">Update</button> </form>
+<form method="post" enctype="multipart/form-data" action="/update-by-file">
+    <input type="file" name="file" />
+    <button type="submit" class="btn">Submit</button>
+</form>
 <table>
     <thead>
     <tr>

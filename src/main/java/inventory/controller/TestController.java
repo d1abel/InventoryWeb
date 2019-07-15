@@ -1,20 +1,20 @@
 package inventory.controller;
 
-import inventory.component.DatabaseParser;
-import inventory.component.FileParser;
+import inventory.component.config.InvConfig;
 import inventory.domain.entity.ComputerEntity;
 import inventory.service.ComputerService;
 import inventory.service.ParserService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Controller
 public class TestController {
@@ -41,12 +41,14 @@ public class TestController {
         return "redirect:/";
     }
 
-    @ResponseBody
+    @SneakyThrows
     @PostMapping("/update-by-file")
-    public void updateByFile(@RequestBody MultipartFile file) {
-        ComputerEntity computerEntity = parserService.readReport((File) file);
+    public String updateByFile(@RequestBody MultipartFile file) {
+        Path filepath = Paths.get(InvConfig.getInstance().getConfig().getSettings().get("reports.dir"), file.getOriginalFilename());
+        file.transferTo(filepath);
+        ComputerEntity computerEntity = parserService.readReport(filepath.toFile());
         parserService.updateComputer(computerEntity);
+
+        return "redirect:/";
     }
-
-
 }
