@@ -44,4 +44,9 @@ public class ParserServiceImpl implements ParserService {
         fileParser.updateCollectionFromReports();
     }
 
+    @Override
+    public void updateByFile(File file) {
+        databaseParser.updateComputer(fileParser.readReport(file));
+    }
+
 }

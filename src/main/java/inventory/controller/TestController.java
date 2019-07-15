@@ -46,8 +46,7 @@ public class TestController {
     public String updateByFile(@RequestBody MultipartFile file) {
         Path filepath = Paths.get(InvConfig.getInstance().getConfig().getSettings().get("reports.dir"), file.getOriginalFilename());
         file.transferTo(filepath);
-        ComputerEntity computerEntity = parserService.readReport(filepath.toFile());
-        parserService.updateComputer(computerEntity);
+        parserService.updateByFile(filepath.toFile());
 
         return "redirect:/";
     }

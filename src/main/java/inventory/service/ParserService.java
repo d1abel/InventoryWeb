@@ -16,4 +16,6 @@ public interface ParserService {
 
     void updateCollectionFromReports();
 
+    void updateByFile(File file);
+
 }
