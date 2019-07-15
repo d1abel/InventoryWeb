@@ -43,16 +43,16 @@ public class FileParser {
     private void getComputers() {
         computers.clear();
         Collection<File> reports = scanDir();
-        for (File files : reports) {
-            Thread thread = new Thread(new ThreadCreator(files));
+        for (File file : reports) {
+            Thread thread = new Thread(new ThreadCreator(file));
             thread.start();
         }
     }
 
     @SneakyThrows
-    void read(File files) {
+    void read(File file) {
         ComputerEntity pc = new ComputerEntity();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(files.getAbsoluteFile()), "cp1251"))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsoluteFile()), "cp1251"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] split = line.split("=");
