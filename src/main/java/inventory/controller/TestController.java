@@ -1,22 +1,30 @@
 package inventory.controller;
 
 import inventory.component.DatabaseParser;
+import inventory.component.FileParser;
+import inventory.domain.entity.ComputerEntity;
 import inventory.service.ComputerService;
+import inventory.service.ParserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 
 @Controller
 public class TestController {
 
-    private final DatabaseParser databaseParser;
     private final ComputerService computerService;
+    private final ParserService parserService;
 
     @Autowired
-    public TestController(DatabaseParser databaseParser, ComputerService computerService) {
-        this.databaseParser = databaseParser;
+    public TestController(ComputerService computerService, ParserService parserService) {
+        this.parserService = parserService;
         this.computerService = computerService;
     }
 
@@ -28,8 +36,16 @@ public class TestController {
 
     @PostMapping("/update")
     public String update() {
-        databaseParser.updateDB();
+        parserService.updateDB();
+
         return "redirect:/";
+    }
+
+    @ResponseBody
+    @PostMapping("/update-by-file")
+    public void updateByFile(@RequestBody MultipartFile file) {
+        ComputerEntity computerEntity = parserService.readReport((File) file);
+        parserService.updateComputer(computerEntity);
     }
 
 

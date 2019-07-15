@@ -26,7 +26,7 @@ public class FileParser {
 
     private Collection<ComputerEntity> computers = new ArrayList<>();
     private Collection<PcUserEntity> users = new ArrayList<>();
-    private Collection<OsEntity> opSysCollection = new ArrayList<>();
+    private Collection<OsEntity> operatingSystems = new ArrayList<>();
     private Collection<ProcessorEntity> processors = new ArrayList<>();
 
     @SneakyThrows
@@ -48,7 +48,7 @@ public class FileParser {
     }
 
     @SneakyThrows
-    void readReport(File file) {
+    ComputerEntity readReport(File file) {
         ComputerEntity pc = new ComputerEntity();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsoluteFile()), "cp1251"))) {
             String line;
@@ -62,7 +62,7 @@ public class FileParser {
                                     OsEntity opSys = new OsEntity(pc);
                                     opSys.setOsname(split[1]);
                                     pc.setOperatingSystem(opSys);
-                                    opSysCollection.add(opSys);
+                                    operatingSystems.add(opSys);
                                 } else pc.setOperatingSystem(getOS(split[1]));
                                 break;
                             case "pcname.key":
@@ -120,11 +120,12 @@ public class FileParser {
             }
         }
         computers.add(pc);
+        return pc;
     }
 
     private OsEntity getOS(String name) {
         OsEntity os = null;
-        for (OsEntity oz : opSysCollection) {
+        for (OsEntity oz : operatingSystems) {
             if (name.equalsIgnoreCase(oz.getOsname())) {
                 os = oz;
             }
@@ -160,7 +161,7 @@ public class FileParser {
         getComputers();
     }
 
-    private static void getUsersInfo() {
+    private void getUsersInfo() {
         //TODO: connect to ldap and get info
     }
 

@@ -29,19 +29,21 @@ public class DatabaseParser {
         this.fileParser = fileParser;
     }
 
-    public void updateDB() {
+    void updateDB() {
 
         fileParser.updateCollectionFromReports();
         for (ComputerEntity computer : fileParser.getComputersCollection()) {
-            ComputerEntity entity = computerRepository.findByMac(computer.getMac());
-            if (entity == null) {
-                addComputer(computer);
-            } else updateComputer(computer, entity);
+            updateComputer(computer);
         }
     }
 
     @Transactional
-    void updateComputer(ComputerEntity computer, ComputerEntity entity) {
+    void updateComputer(ComputerEntity computer) {
+        ComputerEntity entity = computerRepository.findByMac(computer.getMac());
+        if (entity == null) {
+            addComputer(computer);
+            return;
+        }
         if (entity.getLastNames() != null) {
             if (entity.getLastNames().contains(computer.getPcname())) {
                 return;
