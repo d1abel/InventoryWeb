@@ -2,17 +2,17 @@ package inventory.component;
 
 import java.io.File;
 
-public class ThreadCreator implements Runnable {
+public class ReadReportThread implements Runnable {
 
     private File file;
 
-    public ThreadCreator(File file) {
+    public ReadReportThread(File file) {
         this.file = file;
     }
 
     @Override
     public void run() {
         FileParser parser = new FileParser();
-        parser.read(file);
+        parser.readReport(file);
     }
 }

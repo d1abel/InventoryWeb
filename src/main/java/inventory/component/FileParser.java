@@ -11,7 +11,6 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -31,7 +30,7 @@ public class FileParser {
     private Collection<ProcessorEntity> processors = new ArrayList<>();
 
     @SneakyThrows
-    private Collection<File> scanDir() {
+    private Collection<File> getReports() {
         String filepath = InvConfig.getInstance().getConfig().getSettings().get("reports.dir");
 
         return Files.walk(Paths.get(filepath), 1)
@@ -42,15 +41,14 @@ public class FileParser {
 
     private void getComputers() {
         computers.clear();
-        Collection<File> reports = scanDir();
-        for (File file : reports) {
-            Thread thread = new Thread(new ThreadCreator(file));
+        for (File file : getReports()) {
+            Thread thread = new Thread(new ReadReportThread(file));
             thread.start();
         }
     }
 
     @SneakyThrows
-    void read(File file) {
+    void readReport(File file) {
         ComputerEntity pc = new ComputerEntity();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsoluteFile()), "cp1251"))) {
             String line;
@@ -158,7 +156,7 @@ public class FileParser {
         return computers;
     }
 
-    void readFiles() {
+    void updateCollectionFromReports() {
         getComputers();
     }
 

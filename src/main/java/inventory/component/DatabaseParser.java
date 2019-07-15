@@ -31,7 +31,7 @@ public class DatabaseParser {
 
     public void updateDB() {
 
-        fileParser.readFiles();
+        fileParser.updateCollectionFromReports();
         for (ComputerEntity computer : fileParser.getComputersCollection()) {
             ComputerEntity entity = computerRepository.findByMac(computer.getMac());
             if (entity == null) {
@@ -59,7 +59,6 @@ public class DatabaseParser {
             Optional<UserHistoryEntity> historyEntity = userHistoryRepository.findByPcAndCurrentuserAndEndDate(entity.getPcname(), entity.getLoggedUser().getUserLogin(), null);
             if (historyEntity.isPresent()) {
                 UserHistoryEntity history = historyEntity.get();
-                System.out.println(history);
                 history.setEndDate(LocalDate.now());
                 userHistoryRepository.save(history);
             }

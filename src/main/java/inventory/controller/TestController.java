@@ -20,16 +20,16 @@ public class TestController {
         this.computerService = computerService;
     }
 
-    @GetMapping("/test")
+    @GetMapping("/")
     public String testPage(Model model) {
         model.addAttribute("computers", computerService.getAll());
-        return "test";
+        return "index";
     }
 
     @PostMapping("/update")
     public String update() {
         databaseParser.updateDB();
-        return "redirect:/test";
+        return "redirect:/";
     }
 
 
