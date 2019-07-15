@@ -40,83 +40,88 @@ public class FileParser {
                 .collect(Collectors.toList());
     }
 
-    @SneakyThrows
     private void getComputers() {
         computers.clear();
         Collection<File> reports = scanDir();
         for (File files : reports) {
-            ComputerEntity pc = new ComputerEntity();
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(files.getAbsoluteFile()), "cp1251"))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    String[] split = line.split("=");
-                    for (Map.Entry<String, String> items : InvConfig.getInstance().getConfig().getSettings().entrySet()) {
-                        if (split[0].contains(items.getValue())) {
-                            switch (items.getKey()) {
-                                case "os.key":
-                                    if (getOS(split[1]) == null) {
-                                        OsEntity opSys = new OsEntity(pc);
-                                        opSys.setOsname(split[1]);
-                                        pc.setOperatingSystem(opSys);
-                                        opSysCollection.add(opSys);
-                                    } else pc.setOperatingSystem(getOS(split[1]));
-                                    break;
-                                case "pcname.key":
-                                    pc.setPcname(split[1]);
-                                    break;
-                                case "pcuser.key":
-                                    if (getUser(split[1]) == null) {
-                                        PcUserEntity pcUser = new PcUserEntity(pc);
-                                        pcUser.setUserLogin(split[1].toLowerCase());
-                                        pc.setLoggedUser(pcUser);
-                                        users.add(pcUser);
-                                    } else pc.setLoggedUser(getUser(split[1]));
-                                    break;
-                                case "pcmb.key":
-                                    pc.setMotherboard(split[1]);
-                                    break;
-                                case "pcproc.key":
-                                    if (getProc(split[1]) == null) {
-                                        ProcessorEntity processor = new ProcessorEntity(pc);
-                                        processor.setProcname(split[1].toLowerCase());
-                                        pc.setProcessor(processor);
-                                        processors.add(processor);
-                                    } else pc.setProcessor(getProc(split[1]));
-                                    break;
-                                case "pcmbchip.key":
-                                    pc.setChipset(split[1]);
-                                    break;
-                                case "pcram.key":
-                                    pc.setMemory(split[1]);
-                                    break;
-                                case "pcdisplay.key":
-                                    if (pc.getDisplay() == null) {
-                                        pc.setDisplay(split[1]);
-                                    } else pc.setDisplay(pc.getDisplay() + ", " + split[1]);
-                                    break;
-                                case "pchdd.key":
-                                    if (pc.getHdd() == null) {
-                                        pc.setHdd(split[1]);
-                                    } else pc.setHdd(pc.getHdd() + ", " + split[1]);
-                                    break;
-                                case "pchddspace.key":
-                                    if (pc.getHddSpace() == null) {
-                                        pc.setHddSpace(split[1]);
-                                    } else pc.setHddSpace(pc.getHddSpace() + ", " + split[1]);
-                                    break;
-                                case "pcinetaddr.key":
-                                    pc.setInetAddr(split[1]);
-                                    break;
-                                case "macaddr.key":
-                                    pc.setMac(split[1]);
-                                    break;
-                            }
+            Thread thread = new Thread(new ThreadCreator(files));
+            thread.start();
+        }
+    }
+
+    @SneakyThrows
+    void read(File files) {
+        ComputerEntity pc = new ComputerEntity();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(files.getAbsoluteFile()), "cp1251"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] split = line.split("=");
+                for (Map.Entry<String, String> items : InvConfig.getInstance().getConfig().getSettings().entrySet()) {
+                    if (split[0].contains(items.getValue())) {
+                        switch (items.getKey()) {
+                            case "os.key":
+                                if (getOS(split[1]) == null) {
+                                    OsEntity opSys = new OsEntity(pc);
+                                    opSys.setOsname(split[1]);
+                                    pc.setOperatingSystem(opSys);
+                                    opSysCollection.add(opSys);
+                                } else pc.setOperatingSystem(getOS(split[1]));
+                                break;
+                            case "pcname.key":
+                                pc.setPcname(split[1]);
+                                break;
+                            case "pcuser.key":
+                                if (getUser(split[1]) == null) {
+                                    PcUserEntity pcUser = new PcUserEntity(pc);
+                                    pcUser.setUserLogin(split[1].toLowerCase());
+                                    pc.setLoggedUser(pcUser);
+                                    users.add(pcUser);
+                                } else pc.setLoggedUser(getUser(split[1]));
+                                break;
+                            case "pcmb.key":
+                                pc.setMotherboard(split[1]);
+                                break;
+                            case "pcproc.key":
+                                if (getProc(split[1]) == null) {
+                                    ProcessorEntity processor = new ProcessorEntity(pc);
+                                    processor.setProcname(split[1].toLowerCase());
+                                    pc.setProcessor(processor);
+                                    processors.add(processor);
+                                } else pc.setProcessor(getProc(split[1]));
+                                break;
+                            case "pcmbchip.key":
+                                pc.setChipset(split[1]);
+                                break;
+                            case "pcram.key":
+                                pc.setMemory(split[1]);
+                                break;
+                            case "pcdisplay.key":
+                                if (pc.getDisplay() == null) {
+                                    pc.setDisplay(split[1]);
+                                } else pc.setDisplay(pc.getDisplay() + ", " + split[1]);
+                                break;
+                            case "pchdd.key":
+                                if (pc.getHdd() == null) {
+                                    pc.setHdd(split[1]);
+                                } else pc.setHdd(pc.getHdd() + ", " + split[1]);
+                                break;
+                            case "pchddspace.key":
+                                if (pc.getHddSpace() == null) {
+                                    pc.setHddSpace(split[1]);
+                                } else pc.setHddSpace(pc.getHddSpace() + ", " + split[1]);
+                                break;
+                            case "pcinetaddr.key":
+                                pc.setInetAddr(split[1]);
+                                break;
+                            case "macaddr.key":
+                                pc.setMac(split[1]);
+                                break;
                         }
                     }
                 }
             }
-            computers.add(pc);
         }
+        computers.add(pc);
     }
 
     private OsEntity getOS(String name) {
@@ -149,11 +154,11 @@ public class FileParser {
         return processor;
     }
 
-    public Collection<ComputerEntity> getComputersCollection() {
+    Collection<ComputerEntity> getComputersCollection() {
         return computers;
     }
 
-    public void readFiles() {
+    void readFiles() {
         getComputers();
     }
 
@@ -161,14 +166,4 @@ public class FileParser {
         //TODO: connect to ldap and get info
     }
 
-    private static String toUTF(String string) {
-        byte[] array;
-        try {
-            array = string.getBytes("cp1251");
-            return new String(array, StandardCharsets.UTF_8);
-            //почему-то это не прокатывает и в базу пишутся вопросики вместо кириллицы :(
-        } catch (Exception e) {
-            return null;
-        }
-    }
 }
