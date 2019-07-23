@@ -48,5 +48,4 @@ public class ParserServiceImpl implements ParserService {
     public void updateByFile(File file) {
         databaseParser.updateComputer(fileParser.readReport(file));
     }
-
 }
