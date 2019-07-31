@@ -28,4 +28,7 @@ public class OsEntity {
         this.pcs.add(pc);
     }
 
+    public OsEntity(String osname) {
+        this.osname = osname;
+    }
 }

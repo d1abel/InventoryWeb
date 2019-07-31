@@ -24,6 +24,10 @@ public class ProcessorEntity {
     @OneToMany(mappedBy = "processor")
     private List<ComputerEntity> pcs = new ArrayList<>();
 
+    public ProcessorEntity(String procname) {
+        this.procname = procname;
+    }
+
     public ProcessorEntity(ComputerEntity pc) {
         this.pcs.add(pc);
     }

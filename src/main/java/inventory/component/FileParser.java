@@ -1,37 +1,44 @@
 package inventory.component;
 
-import inventory.component.config.InvConfig;
+import inventory.component.config.ReadConfigurationFile;
+import inventory.component.fileToObject.ComputerParametersFactory;
+import inventory.component.fileToObject.FileService;
 import inventory.domain.entity.ComputerEntity;
-import inventory.domain.entity.OsEntity;
-import inventory.domain.entity.PcUserEntity;
-import inventory.domain.entity.ProcessorEntity;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Getter
-@NoArgsConstructor
 @Component
 public class FileParser {
 
     private Collection<ComputerEntity> computers = new ArrayList<>();
-    private Collection<PcUserEntity> users = new ArrayList<>();
-    private Collection<OsEntity> operatingSystems = new ArrayList<>();
-    private Collection<ProcessorEntity> processors = new ArrayList<>();
+
+    private final ComputerParametersFactory factory;
+    private final ReadConfigurationFile configurationFile;
+
+    @Autowired
+    public FileParser(ComputerParametersFactory factory, ReadConfigurationFile configurationFile) {
+        this.factory = factory;
+        this.configurationFile = configurationFile;
+    }
+
 
     @SneakyThrows
     private Collection<File> getReports() {
-        String filepath = InvConfig.getInstance().getConfig().getSettings().get("reports.dir");
+        String filepath = configurationFile.getSettings().get("reports.dir");
 
         return Files.walk(Paths.get(filepath), 1)
                 .map(Path::toFile)
@@ -42,8 +49,9 @@ public class FileParser {
     private void getComputers() {
         computers.clear();
         for (File file : getReports()) {
-            Thread thread = new Thread(new ReadReportThread(file));
-            thread.start();
+//            Thread thread = new Thread(new ReadReportThread(file));
+//            thread.start();
+            readReport(file);
         }
     }
 
@@ -54,103 +62,12 @@ public class FileParser {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] split = line.split("=");
-                for (Map.Entry<String, String> items : InvConfig.getInstance().getConfig().getSettings().entrySet()) {
-                    if (split[0].contains(items.getValue())) {
-                        switch (items.getKey()) {
-                            case "os.key":
-                                if (getOS(split[1]) == null) {
-                                    OsEntity opSys = new OsEntity(pc);
-                                    opSys.setOsname(split[1]);
-                                    pc.setOperatingSystem(opSys);
-                                    operatingSystems.add(opSys);
-                                } else pc.setOperatingSystem(getOS(split[1]));
-                                break;
-                            case "pcname.key":
-                                pc.setPcname(split[1]);
-                                break;
-                            case "pcuser.key":
-                                if (getUser(split[1]) == null) {
-                                    PcUserEntity pcUser = new PcUserEntity(pc);
-                                    pcUser.setUserLogin(split[1].toLowerCase());
-                                    pc.setLoggedUser(pcUser);
-                                    users.add(pcUser);
-                                } else pc.setLoggedUser(getUser(split[1]));
-                                break;
-                            case "pcmb.key":
-                                pc.setMotherboard(split[1]);
-                                break;
-                            case "pcproc.key":
-                                if (getProc(split[1]) == null) {
-                                    ProcessorEntity processor = new ProcessorEntity(pc);
-                                    processor.setProcname(split[1].toLowerCase());
-                                    pc.setProcessor(processor);
-                                    processors.add(processor);
-                                } else pc.setProcessor(getProc(split[1]));
-                                break;
-                            case "pcmbchip.key":
-                                pc.setChipset(split[1]);
-                                break;
-                            case "pcram.key":
-                                pc.setMemory(split[1]);
-                                break;
-                            case "pcdisplay.key":
-                                if (pc.getDisplay() == null) {
-                                    pc.setDisplay(split[1]);
-                                } else pc.setDisplay(pc.getDisplay() + ", " + split[1]);
-                                break;
-                            case "pchdd.key":
-                                if (pc.getHdd() == null) {
-                                    pc.setHdd(split[1]);
-                                } else pc.setHdd(pc.getHdd() + ", " + split[1]);
-                                break;
-                            case "pchddspace.key":
-                                if (pc.getHddSpace() == null) {
-                                    pc.setHddSpace(split[1]);
-                                } else pc.setHddSpace(pc.getHddSpace() + ", " + split[1]);
-                                break;
-                            case "pcinetaddr.key":
-                                pc.setInetAddr(split[1]);
-                                break;
-                            case "macaddr.key":
-                                pc.setMac(split[1]);
-                                break;
-                        }
-                    }
-                }
+                FileService service = factory.getParameter(split[0]);
+                service.readRow(pc, split[1]);
             }
         }
         computers.add(pc);
         return pc;
-    }
-
-    private OsEntity getOS(String name) {
-        OsEntity os = null;
-        for (OsEntity oz : operatingSystems) {
-            if (name.equalsIgnoreCase(oz.getOsname())) {
-                os = oz;
-            }
-        }
-        return os;
-    }
-
-    private PcUserEntity getUser(String login) {
-        PcUserEntity userr = null;
-        for (PcUserEntity user : users) {
-            if (login.equalsIgnoreCase(user.getUserLogin())) {
-                userr = user;
-            }
-        }
-        return userr;
-    }
-
-    private ProcessorEntity getProc(String procname) {
-        ProcessorEntity processor = null;
-        for (ProcessorEntity proc : processors) {
-            if (procname.equalsIgnoreCase(proc.getProcname())) {
-                processor = proc;
-            }
-        }
-        return processor;
     }
 
     Collection<ComputerEntity> getComputersCollection() {

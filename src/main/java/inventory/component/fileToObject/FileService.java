@@ -1,7 +1,9 @@
 package inventory.component.fileToObject;
 
+import inventory.domain.entity.ComputerEntity;
+
 public interface FileService {
 
-    Object rowFromFile(String row);
+    void readRow(ComputerEntity pc, String row);
 
 }

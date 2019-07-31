@@ -30,4 +30,7 @@ public class PcUserEntity {
         this.pcs.add(pc);
     }
 
+    public PcUserEntity(String userLogin) {
+        this.userLogin = userLogin;
+    }
 }

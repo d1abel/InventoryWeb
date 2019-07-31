@@ -12,7 +12,7 @@ public class ReadReportThread implements Runnable {
 
     @Override
     public void run() {
-        FileParser parser = new FileParser();
-        parser.readReport(file);
+//        FileParser parser = new FileParser();
+//        parser.readReport(file);
     }
 }
