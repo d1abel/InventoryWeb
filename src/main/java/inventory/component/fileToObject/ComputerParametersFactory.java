@@ -39,7 +39,7 @@ public class ComputerParametersFactory {
 
     private final ReadConfigurationFile configurationFile;
 
-    private HashMap<String, FileService> computerParameters;
+    private HashMap<String, FileService> computerParameters = new HashMap<>();
 
     @Autowired
     public ComputerParametersFactory(ReadConfigurationFile configurationFile) {

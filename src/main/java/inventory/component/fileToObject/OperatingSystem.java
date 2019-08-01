@@ -24,6 +24,7 @@ public class OperatingSystem implements FileService {
         if (osEntity == null) {
             osEntity = new OsEntity(row);
             operatingSystems.add(osEntity);
+            pc.setOperatingSystem(osEntity);
         }
         osEntity.getPcs().add(pc);
     }

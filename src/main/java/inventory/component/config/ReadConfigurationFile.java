@@ -21,41 +21,24 @@ public class ReadConfigurationFile {
 
     @PostConstruct
     public void setupMapOfSettings() {
-        settings.put("reports.dir", "");
-        settings.put("operatingSystem.key", "");
-        settings.put("computerName.key", "");
-        settings.put("computerUser.key", "");
-        settings.put("motherboard.key", "");
-        settings.put("processor.key", "");
-        settings.put("chipset.key", "");
-        settings.put("RAM.key", "");
-        settings.put("display.key", "");
-        settings.put("HDD.key", "");
-        settings.put("freeSpaceHDD.key", "");
-        settings.put("inetAddress.key", "");
-        settings.put("MACAddress.key", "");
         loadConfig();
     }
 
     @SneakyThrows
     private void loadConfig() {
 
-            ClassLoader classLoader = ReadConfigurationFile.class.getClassLoader();
+        ClassLoader classLoader = ReadConfigurationFile.class.getClassLoader();
 
-            URI uri = Optional.ofNullable(classLoader.getResource(CONFIG_FILE_NAME))
-                    .orElseThrow(() -> new RuntimeException("Could not find properties file!"))
-                    .toURI();
+        URI uri = Optional.ofNullable(classLoader.getResource(CONFIG_FILE_NAME))
+                .orElseThrow(() -> new RuntimeException("Could not find properties file!"))
+                .toURI();
 
         File configFile = new File(uri);
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(configFile.getAbsoluteFile())))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] settings = line.split("=");
-                for (Map.Entry<String, String> item : this.settings.entrySet()) {
-                    if (item.getKey().equalsIgnoreCase(settings[0])) {
-                        item.setValue(settings[1]);
-                    }
-                }
+                String[] split = line.split("=");
+                settings.put(split[0], split[1]);
             }
         } catch (IOException e) {
             throw new RuntimeException("Could not find properties file!");

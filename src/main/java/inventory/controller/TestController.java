@@ -1,6 +1,5 @@
 package inventory.controller;
 
-import inventory.component.config.InvConfig;
 import inventory.component.config.ReadConfigurationFile;
 import inventory.domain.dto.Computer;
 import inventory.service.ComputerService;

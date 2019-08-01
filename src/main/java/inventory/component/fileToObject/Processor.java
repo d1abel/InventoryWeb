@@ -24,6 +24,7 @@ public class Processor implements FileService {
         if (processorEntity == null) {
             processorEntity = new ProcessorEntity(row);
             processors.add(processorEntity);
+            pc.setProcessor(processorEntity);
         }
         processorEntity.getPcs().add(pc);
     }

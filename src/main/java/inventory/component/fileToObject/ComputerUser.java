@@ -24,6 +24,7 @@ public class ComputerUser implements FileService {
         if (userr == null) {
             userr = new PcUserEntity(row);
             users.add(userr);
+            pc.setLoggedUser(userr);
         }
         userr.getPcs().add(pc);
     }
