@@ -4,7 +4,7 @@ import inventory.domain.entity.ComputerEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ComputerName implements FileService {
+public class ComputerName implements ComputerParametersService {
 
     private String name;
 

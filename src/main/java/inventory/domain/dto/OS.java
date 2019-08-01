@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Os {
+public class OS {
 
     private Integer id;
     private String osName;

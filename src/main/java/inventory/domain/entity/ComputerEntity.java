@@ -39,10 +39,10 @@ public class ComputerEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "osname")
-    private OsEntity operatingSystem;
+    private OSEntity operatingSystem;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userLogin")
-    private PcUserEntity loggedUser;
+    private ComputerUserEntity loggedUser;
 
 }

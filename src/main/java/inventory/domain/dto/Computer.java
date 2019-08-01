@@ -24,7 +24,7 @@ public class Computer {
     private String lastNames;
     private String mac;
     private Processor procname;
-    private Os osname;
-    private PcUser loggedUser;
+    private OS osname;
+    private ComputerUser loggedUser;
 
 }

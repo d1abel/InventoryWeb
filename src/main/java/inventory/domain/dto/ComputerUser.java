@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PcUser {
+public class ComputerUser {
 
     private Integer id;
     private String userLogin;

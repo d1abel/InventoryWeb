@@ -39,7 +39,7 @@ public class ComputerParametersFactory {
 
     private final ReadConfigurationFile configurationFile;
 
-    private HashMap<String, FileService> computerParameters = new HashMap<>();
+    private HashMap<String, ComputerParametersService> computerParameters = new HashMap<>();
 
     @Autowired
     public ComputerParametersFactory(ReadConfigurationFile configurationFile) {
@@ -62,7 +62,7 @@ public class ComputerParametersFactory {
         computerParameters.put(configurationFile.getSettings().get("MACAddress.key"), macAddress);
     }
 
-    public FileService getParameter(String key) {
+    public ComputerParametersService getParameter(String key) {
         return computerParameters.get(key);
     }
 

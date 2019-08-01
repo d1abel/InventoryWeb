@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Component
-public class Processor implements FileService {
+public class Processor implements ComputerParametersService {
 
     private Collection<ProcessorEntity> processors = new ArrayList<>();
 

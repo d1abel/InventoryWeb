@@ -1,12 +1,8 @@
 package inventory.service;
 
 import inventory.domain.entity.ComputerEntity;
-import inventory.domain.entity.OsEntity;
-import inventory.domain.entity.PcUserEntity;
-import inventory.domain.entity.ProcessorEntity;
 
 import java.io.File;
-import java.util.Collection;
 
 public interface ParserService {
 

@@ -1,28 +1,28 @@
 package inventory.component.fileToObject;
 
 import inventory.domain.entity.ComputerEntity;
-import inventory.domain.entity.PcUserEntity;
+import inventory.domain.entity.ComputerUserEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Component
-public class ComputerUser implements FileService {
+public class ComputerUser implements ComputerParametersService {
 
-    private Collection<PcUserEntity> users = new ArrayList<>();
+    private Collection<ComputerUserEntity> users = new ArrayList<>();
 
     @Override
     public void readRow(ComputerEntity pc, String row) {
-        PcUserEntity userr = null;
-        for (PcUserEntity user : users) {
+        ComputerUserEntity userr = null;
+        for (ComputerUserEntity user : users) {
             if (row.equalsIgnoreCase(user.getUserLogin())) {
                 userr = user;
                 pc.setLoggedUser(user);
             }
         }
         if (userr == null) {
-            userr = new PcUserEntity(row);
+            userr = new ComputerUserEntity(row);
             users.add(userr);
             pc.setLoggedUser(userr);
         }

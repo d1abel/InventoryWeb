@@ -29,7 +29,7 @@ public class DatabaseParser {
         this.fileParser = fileParser;
     }
 
-    void updateDB() {
+    void updateDataBaseFromReportsDirectory() {
 
         fileParser.updateCollectionFromReports();
         for (ComputerEntity computer : fileParser.getComputersCollection()) {
@@ -67,22 +67,22 @@ public class DatabaseParser {
             userHistoryRepository.save(new UserHistoryEntity(computer.getPcname(), computer.getLoggedUser().getUserLogin(), LocalDate.now(), null));
         }
 
-        updateSpecs(computer);
+        updateOSAndUserAndProcessor(computer);
         computer.setId(entity.getId());
         computerRepository.save(computer);
     }
 
     @Transactional
     void addComputer(ComputerEntity computer) {
-        updateSpecs(computer);
+        updateOSAndUserAndProcessor(computer);
         computerRepository.save(computer);
         userHistoryRepository.save(new UserHistoryEntity(computer.getPcname(), computer.getLoggedUser().getUserLogin(), LocalDate.now(), null));
     }
 
     @Transactional
-    void updateSpecs(ComputerEntity computer) {
-        OsEntity byOsname = osRepository.findByOsname(computer.getOperatingSystem().getOsname());
-        PcUserEntity byUserLogin = pcUserRepository.findByUserLogin(computer.getLoggedUser().getUserLogin());
+    void updateOSAndUserAndProcessor(ComputerEntity computer) {
+        OSEntity byOsname = osRepository.findByOsname(computer.getOperatingSystem().getOsname());
+        ComputerUserEntity byUserLogin = pcUserRepository.findByUserLogin(computer.getLoggedUser().getUserLogin());
         ProcessorEntity byProcname = processorRepository.findByProcname(computer.getProcessor().getProcname());
 
         if (byOsname == null) {

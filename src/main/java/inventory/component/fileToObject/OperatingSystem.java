@@ -1,28 +1,28 @@
 package inventory.component.fileToObject;
 
 import inventory.domain.entity.ComputerEntity;
-import inventory.domain.entity.OsEntity;
+import inventory.domain.entity.OSEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Component
-public class OperatingSystem implements FileService {
+public class OperatingSystem implements ComputerParametersService {
 
-    private Collection<OsEntity> operatingSystems = new ArrayList<>();
+    private Collection<OSEntity> operatingSystems = new ArrayList<>();
 
     @Override
     public void readRow(ComputerEntity pc, String row) {
-        OsEntity osEntity = null;
-        for (OsEntity os : operatingSystems) {
+        OSEntity osEntity = null;
+        for (OSEntity os : operatingSystems) {
             if (row.equalsIgnoreCase(os.getOsname())) {
                 osEntity = os;
                 pc.setOperatingSystem(os);
             }
         }
         if (osEntity == null) {
-            osEntity = new OsEntity(row);
+            osEntity = new OSEntity(row);
             operatingSystems.add(osEntity);
             pc.setOperatingSystem(osEntity);
         }

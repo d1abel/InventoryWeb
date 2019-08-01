@@ -2,14 +2,13 @@ package inventory.component;
 
 import inventory.component.config.ReadConfigurationFile;
 import inventory.component.fileToObject.ComputerParametersFactory;
-import inventory.component.fileToObject.FileService;
+import inventory.component.fileToObject.ComputerParametersService;
 import inventory.domain.entity.ComputerEntity;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -63,14 +62,13 @@ public class FileParser {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] split = line.split("=");
-                FileService service = factory.getParameter(split[0]);
+                ComputerParametersService service = factory.getParameter(split[0]);
                 if (service != null) {
                     service.readRow(pc, split[1]);
                 }
             }
         }
         computers.add(pc);
-//        System.out.println(pc.toString());
         return pc;
     }
 

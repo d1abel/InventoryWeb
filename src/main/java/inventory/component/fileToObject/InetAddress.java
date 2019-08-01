@@ -4,7 +4,7 @@ import inventory.domain.entity.ComputerEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class InetAddress implements FileService {
+public class InetAddress implements ComputerParametersService {
 
     @Override
     public void readRow(ComputerEntity pc, String row) {

@@ -12,25 +12,23 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "users")
-public class PcUserEntity {
+@Table(name = "os")
+public class OSEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "login")
-    private String userLogin;
-    private String company;
-    private String department;
 
-    @OneToMany(mappedBy = "loggedUser")
+    private String osname;
+
+    @OneToMany(mappedBy = "operatingSystem")
     private List<ComputerEntity> pcs = new ArrayList<>();
 
-    public PcUserEntity(ComputerEntity pc) {
+    public OSEntity(ComputerEntity pc) {
         this.pcs.add(pc);
     }
 
-    public PcUserEntity(String userLogin) {
-        this.userLogin = userLogin;
+    public OSEntity(String osname) {
+        this.osname = osname;
     }
 }

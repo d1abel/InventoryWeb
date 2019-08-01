@@ -1,10 +1,10 @@
 package inventory.service;
 
 
-import inventory.domain.entity.PcUserEntity;
+import inventory.domain.entity.ComputerUserEntity;
 
 public interface PcUserService {
 
-    PcUserEntity createOrUpdate(String userLogin);
+    ComputerUserEntity createOrUpdate(String userLogin);
 
 }

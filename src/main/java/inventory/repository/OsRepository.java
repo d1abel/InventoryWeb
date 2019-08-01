@@ -1,12 +1,12 @@
 package inventory.repository;
 
-import inventory.domain.entity.OsEntity;
+import inventory.domain.entity.OSEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OsRepository extends CrudRepository<OsEntity, Integer> {
+public interface OsRepository extends CrudRepository<OSEntity, Integer> {
 
-    OsEntity findByOsname(String osname);
+    OSEntity findByOsname(String osname);
 
 }

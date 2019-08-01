@@ -21,7 +21,7 @@ public class ParserServiceImpl implements ParserService {
 
     @Override
     public void updateDB() {
-        databaseParser.updateDB();
+        databaseParser.updateDataBaseFromReportsDirectory();
     }
 
     @Override
