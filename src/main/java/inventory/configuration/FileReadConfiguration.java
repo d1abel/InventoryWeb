@@ -1,4 +1,4 @@
-package inventory.component.config;
+package inventory.configuration;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Getter
 @Component
-public class ReadConfigurationFile {
+public class FileReadConfiguration {
 
     private static final String CONFIG_FILE_NAME = "configuration.properties";
 
@@ -27,7 +27,7 @@ public class ReadConfigurationFile {
     @SneakyThrows
     private void loadConfig() {
 
-        ClassLoader classLoader = ReadConfigurationFile.class.getClassLoader();
+        ClassLoader classLoader = FileReadConfiguration.class.getClassLoader();
 
         URI uri = Optional.ofNullable(classLoader.getResource(CONFIG_FILE_NAME))
                 .orElseThrow(() -> new RuntimeException("Could not find properties file!"))

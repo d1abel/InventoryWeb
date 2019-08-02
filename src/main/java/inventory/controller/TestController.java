@@ -1,6 +1,6 @@
 package inventory.controller;
 
-import inventory.component.config.ReadConfigurationFile;
+import inventory.configuration.FileReadConfiguration;
 import inventory.domain.dto.Computer;
 import inventory.service.ComputerService;
 import inventory.service.ParserService;
@@ -24,13 +24,13 @@ public class TestController {
     private final ComputerService computerService;
     private final ParserService parserService;
     private final PcUserService pcUserService;
-    private final ReadConfigurationFile configurationFile;
+    private final FileReadConfiguration configurationFile;
     //для сортировок, чисто по фану
     //хотя, я думаю, адекватные люди пишут это во фронте
     private Collection<Computer> comps;
 
     @Autowired
-    public TestController(ComputerService computerService, ParserService parserService, PcUserService pcUserService, ReadConfigurationFile configurationFile) {
+    public TestController(ComputerService computerService, ParserService parserService, PcUserService pcUserService, FileReadConfiguration configurationFile) {
         this.parserService = parserService;
         this.computerService = computerService;
         this.pcUserService = pcUserService;

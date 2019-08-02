@@ -1,6 +1,6 @@
 package inventory.component;
 
-import inventory.component.config.ReadConfigurationFile;
+import inventory.configuration.FileReadConfiguration;
 import inventory.component.fileToObject.ComputerParametersFactory;
 import inventory.component.fileToObject.ComputerParametersService;
 import inventory.domain.entity.ComputerEntity;
@@ -27,10 +27,10 @@ public class FileParser {
     private Collection<ComputerEntity> computers = new ArrayList<>();
 
     private final ComputerParametersFactory factory;
-    private final ReadConfigurationFile configurationFile;
+    private final FileReadConfiguration configurationFile;
 
     @Autowired
-    public FileParser(ComputerParametersFactory factory, ReadConfigurationFile configurationFile) {
+    public FileParser(ComputerParametersFactory factory, FileReadConfiguration configurationFile) {
         this.factory = factory;
         this.configurationFile = configurationFile;
     }

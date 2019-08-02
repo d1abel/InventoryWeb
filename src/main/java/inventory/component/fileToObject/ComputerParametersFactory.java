@@ -1,6 +1,6 @@
 package inventory.component.fileToObject;
 
-import inventory.component.config.ReadConfigurationFile;
+import inventory.configuration.FileReadConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -37,12 +37,12 @@ public class ComputerParametersFactory {
     @Autowired
     private MACAddress macAddress;
 
-    private final ReadConfigurationFile configurationFile;
+    private final FileReadConfiguration configurationFile;
 
     private HashMap<String, ComputerParametersService> computerParameters = new HashMap<>();
 
     @Autowired
-    public ComputerParametersFactory(ReadConfigurationFile configurationFile) {
+    public ComputerParametersFactory(FileReadConfiguration configurationFile) {
         this.configurationFile = configurationFile;
     }
 
