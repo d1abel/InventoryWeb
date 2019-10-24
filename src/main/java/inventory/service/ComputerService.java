@@ -8,4 +8,6 @@ public interface ComputerService {
 
     Collection<Computer> getAll();
 
+    Computer getById(int id);
+
 }

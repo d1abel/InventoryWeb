@@ -9,4 +9,6 @@ public interface ComputerRepository extends CrudRepository<ComputerEntity, Integ
 
     ComputerEntity findByMac(String mac);
 
+    ComputerEntity findById(int id);
+
 }

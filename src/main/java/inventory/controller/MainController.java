@@ -19,7 +19,7 @@ import java.nio.file.Paths;
 import java.util.Collection;
 
 @Controller
-public class TestController {
+public class MainController {
 
     private final ComputerService computerService;
     private final ParserService parserService;
@@ -30,7 +30,7 @@ public class TestController {
     private Collection<Computer> comps;
 
     @Autowired
-    public TestController(ComputerService computerService, ParserService parserService, PcUserService pcUserService, FileReadConfiguration configurationFile) {
+    public MainController(ComputerService computerService, ParserService parserService, PcUserService pcUserService, FileReadConfiguration configurationFile) {
         this.parserService = parserService;
         this.computerService = computerService;
         this.pcUserService = pcUserService;
@@ -38,17 +38,10 @@ public class TestController {
     }
 
     @GetMapping("/")
-    public String testPage(Model model) {
+    public String mainPage(Model model) {
         this.comps = computerService.getAll();
         model.addAttribute("computers", comps);
         return "index";
-    }
-
-    @PostMapping("/update")
-    public String update() {
-        parserService.updateDB();
-
-        return "redirect:/";
     }
 
     @SneakyThrows

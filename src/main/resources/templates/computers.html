@@ -1,0 +1,22 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<form action="/update" method="post"><button type="submit">Update</button> </form>
+<form method="post" enctype="multipart/form-data" action="/update-by-file">
+    <input type="file" name="file" />
+    <button type="submit" class="btn">Submit</button>
+</form>
+<table>
+    <tbody>
+    <tr th:each="computer : ${computers}">
+        <td><a th:href="@{'/computers/' + ${computer.id}}" th:text="${computer.pcname}"></a></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+
+</html>

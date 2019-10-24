@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${computer.pcname}"></title>
+</head>
+<body>
+<table>
+    <tbody>
+    <tr>
+        <td>Computer name: </td>
+        <td th:text="${computer.pcname}"></td>
+    </tr>
+    <tr>
+        <td>Computer user: </td>
+        <td th:text="${computer.getLoggedUser().userLogin}"></td>
+    </tr>
+    <tr>
+        <td>Chipset: </td>
+        <td th:text="${computer.chipset}"></td>
+    </tr>
+    <tr>
+        <td>Motherboard: </td>
+        <td th:text="${computer.motherboard}"></td>
+    </tr>
+<!--    <tr>-->
+<!--        <td>Operating system: </td>-->
+<!--        <td th:text="${computer.getOsname().osName}"></td>-->
+<!--    </tr>-->
+    <tr>
+        <td>Processor: </td>
+        <td th:text="${computer.getProcname().procname}"></td>
+    </tr>
+    <tr>
+        <td>Memory: </td>
+        <td th:text="${computer.memory}"></td>
+    </tr>
+    <tr>
+        <td>HDD: </td>
+        <td th:text="${computer.hdd}"></td>
+    </tr>
+    <tr>
+        <td>ip: </td>
+        <td th:text="${computer.inetAddr}"></td>
+    </tr>
+    <tr>
+        <td>Display: </td>
+        <td th:text="${computer.display}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

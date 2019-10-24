@@ -31,4 +31,11 @@ public class ComputerServiceImpl implements ComputerService {
                 .map(computerEntity -> modelMapper.map(computerEntity, Computer.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Computer getById(int id) {
+        ModelMapper modelMapper = new ModelMapper();
+        ComputerEntity byId = computerRepository.findById(id);
+        return modelMapper.map(byId, Computer.class);
+    }
 }
