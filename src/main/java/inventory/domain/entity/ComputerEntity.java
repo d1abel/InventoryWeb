@@ -33,15 +33,15 @@ public class ComputerEntity {
     private String lastNames;
     private String mac;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "procname")
     private ProcessorEntity processor;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "osname")
     private OSEntity operatingSystem;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "userLogin")
     private ComputerUserEntity loggedUser;
 

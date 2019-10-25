@@ -23,17 +23,13 @@ public class MainController {
 
     private final ComputerService computerService;
     private final ParserService parserService;
-    private final PcUserService pcUserService;
     private final FileReadConfiguration configurationFile;
-    //для сортировок, чисто по фану
-    //хотя, я думаю, адекватные люди пишут это во фронте
     private Collection<Computer> comps;
 
     @Autowired
-    public MainController(ComputerService computerService, ParserService parserService, PcUserService pcUserService, FileReadConfiguration configurationFile) {
+    public MainController(ComputerService computerService, ParserService parserService, FileReadConfiguration configurationFile) {
         this.parserService = parserService;
         this.computerService = computerService;
-        this.pcUserService = pcUserService;
         this.configurationFile = configurationFile;
     }
 

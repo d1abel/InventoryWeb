@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
+import java.util.Map;
 
 @Component
 @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
@@ -63,6 +64,11 @@ public class ComputerParametersFactory {
     }
 
     public ComputerParametersService getParameter(String key) {
+        for (Map.Entry<String, String> entry : configurationFile.getSettings().entrySet()) {
+            if (key.contains(entry.getValue())) {
+                key = entry.getValue();
+            }
+        }
         return computerParameters.get(key);
     }
 

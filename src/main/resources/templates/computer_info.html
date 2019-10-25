@@ -14,7 +14,7 @@
     </tr>
     <tr>
         <td>Computer user: </td>
-        <td th:text="${computer.getLoggedUser().userLogin}"></td>
+        <td th:text="${computer.loggedUser.userLogin}"></td>
     </tr>
     <tr>
         <td>Chipset: </td>
@@ -24,13 +24,13 @@
         <td>Motherboard: </td>
         <td th:text="${computer.motherboard}"></td>
     </tr>
-<!--    <tr>-->
-<!--        <td>Operating system: </td>-->
-<!--        <td th:text="${computer.getOsname().osName}"></td>-->
-<!--    </tr>-->
+    <tr>
+        <td>Operating system: </td>
+        <td th:text="${computer.operatingSystem.osName}"></td>
+    </tr>
     <tr>
         <td>Processor: </td>
-        <td th:text="${computer.getProcname().procname}"></td>
+        <td th:text="${computer.processor.procname}"></td>
     </tr>
     <tr>
         <td>Memory: </td>

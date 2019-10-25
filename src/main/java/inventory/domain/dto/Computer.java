@@ -23,8 +23,8 @@ public class Computer {
     private String inetAddr;
     private String lastNames;
     private String mac;
-    private Processor procname;
-    private OS osname;
+    private Processor processor;
+    private OS operatingSystem;
     private ComputerUser loggedUser;
 
 }

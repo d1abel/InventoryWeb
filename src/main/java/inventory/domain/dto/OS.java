@@ -16,6 +16,6 @@ public class OS {
 
     private Integer id;
     private String osName;
-    private List<Computer> computers = new ArrayList<>();
+    private List<Computer> pcs = new ArrayList<>();
 
 }

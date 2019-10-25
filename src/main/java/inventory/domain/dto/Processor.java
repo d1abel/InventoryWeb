@@ -16,6 +16,6 @@ public class Processor {
 
     private Integer id;
     private String procname;
-    private List<Computer> computers = new ArrayList<>();
+    private List<Computer> pcs = new ArrayList<>();
 
 }

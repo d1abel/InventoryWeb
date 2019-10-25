@@ -41,7 +41,7 @@ public class ComputersController {
         return "redirect:/computers";
     }
 
-    @GetMapping("/{computerID}/")
+    @GetMapping("/{computerID}")
     public String computerInfoPage(@PathVariable final int computerID, Model model) {
         model.addAttribute("computer", computerService.getById(computerID));
         return "computer_info";
